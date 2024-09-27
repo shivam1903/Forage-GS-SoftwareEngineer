@@ -52,24 +52,9 @@ def main(hashes_file, dictionary_file, output_file, mode='0'):
                     # Run hashcat if the hash is not found in the potfile
                     result = run_hashcat(hash, dictionary_file, mode)
                     output.write(f"{result}\n")
-                    # if not result.__contains__("No result for hash"):
-                    #     output.write(f"{result}\n")
-                    # else:
-                    #     print(f"Dictionary attack failed, switching to brute-force...")
-                        # brute_result = brute_force_hashcat(hash, mode, "piotrcki-wordlist-top10m.txt")
-                        # output.write(f"{brute_result}\n")
+                    
 
-def brute_force_hashcat(hash, mode, dictionary_file):
-    command = ['hashcat', '-m', mode, '-a', '0', hash, dictionary_file]
-    try:
-        result = subprocess.run(command, capture_output=True, text=True)
-        print(result)
-        for line in result.stdout.splitlines():
-            if line.startswith(hash + ":"):
-                return line
-        return f"No result for hash {hash} after brute-forcing"
-    except Exception as e:
-        return f"Error running brute-force hashcat: {e}"
+
 
 if __name__ == '__main__':
     # File containing MD5 hashes (one per line in format 'experthead:hash')
